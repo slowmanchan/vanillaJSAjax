@@ -88,8 +88,12 @@ window.onload = function() {
   function openRequest() {
     var movieName = inputMovie.value;
     var movieYear = inputYear.value;
+    var rottenTomatoes = document.getElementById('tomatoes-box');
+    var plot = document.getElementById('plot-box');
 
-    XHR.open('GET', 'http://www.omdbapi.com/?t=' + movieName + '&y=' + movieYear);
+    plot = plot.options[plot.selectedIndex].value;
+
+    XHR.open('GET', 'http://www.omdbapi.com/?t=' + movieName + '&y=' + movieYear + '&' + 'tomatoes=' + rottenTomatoes.checked + '&' + 'plot=' + plot);
     inputMovie.value = '';
     inputYear.value = '';
 

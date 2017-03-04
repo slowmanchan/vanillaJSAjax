@@ -7,7 +7,6 @@ window.onload = function() {
   var inputYear = document.getElementById('search-year');
   var movieTitle = document.getElementById('movie-title');
   var infoBox = document.getElementById('info-box');
-  var moviepic;
 
   XHR.onreadystatechange = function() {
     if (XHR.readyState === 4) {
@@ -15,15 +14,17 @@ window.onload = function() {
         var movieData = JSON.parse(XHR.responseText);
         if (movieData.Response == "True") {
           moviePicURL = movieData.Poster;
-          createTable(movieData);
           createImage(moviePicURL);
-          debugger;
+          createTable(movieData);
         } else {
           alert('No movie found');
         }
       } else {
         alert('error, no data');
       }
+    } else {
+      console.log(XHR);
+      debugger;
     }
   }
 
@@ -36,9 +37,17 @@ window.onload = function() {
 
   function createImage(moviePicURL) {
     var image = document.createElement('img');
+    var oldImage = document.getElementById('movie-pic');
+
+    if (oldImage) {
+      oldImage.remove();
+    }
 
     image.src = moviePicURL;
-    document.body.append(image);
+    image.id = 'movie-pic';
+    image.style.float = 'left';
+    image.style.margin = '40px';
+    infoBox.append(image);
   }
 
   function createTable(movieData) {
@@ -67,7 +76,6 @@ window.onload = function() {
         table.style.borderCollapse = 'collapse';
         table.style.tableLayout = 'fixed';
         table.style.width = '600px';
-        table.style.margin = 'auto';
         tr.append(tdTitle);
         tr.append(tdContent);
         table.append(tr);
